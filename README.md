@@ -139,3 +139,16 @@ Các biểu đồ chẩn đoán cho từng mô hình.
 ---
 
 ## Thứ tự chạy Pipeline (`if __name__ == "__main__":`)
+load_data
+
+  → clean_structural
+    → split_data                     (train/test split happens here)
+      → clean_statistical            (fit on train, apply to both)
+        → analyze(train)
+        → visualize_feature_target(train)
+          → feature_engineer         (encode time, one-hot domain_category)
+            → scale_features         (fit scaler on train, apply to both)
+              → train_models         (baseline, linear reg, decision tree, random forest)
+                → evaluate           (MAE/RMSE/R²/MAPE/Accuracy per model)
+                  → visualize        (per-model plots)
+                    → save model_results.csv
